@@ -10,18 +10,36 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as BangGiaRouteImport } from './routes/bang-gia'
+import { Route as DangNhapRouteImport } from './routes/dang-nhap'
+import { Route as DoiMatKhauRouteImport } from './routes/doi-mat-khau'
 import { Route as LienHeRouteImport } from './routes/lien-he'
 import { Route as SanPhamRouteImport } from './routes/san-pham'
+import { Route as AuthenticatedQuanLyRouteImport } from './routes/_authenticated/quan-ly'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BangGiaRoute = BangGiaRouteImport.update({
   id: '/bang-gia',
   path: '/bang-gia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DangNhapRoute = DangNhapRouteImport.update({
+  id: '/dang-nhap',
+  path: '/dang-nhap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DoiMatKhauRoute = DoiMatKhauRouteImport.update({
+  id: '/doi-mat-khau',
+  path: '/doi-mat-khau',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LienHeRoute = LienHeRouteImport.update({
@@ -34,37 +52,78 @@ const SanPhamRoute = SanPhamRouteImport.update({
   path: '/san-pham',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedQuanLyRoute = AuthenticatedQuanLyRouteImport.update({
+  id: '/quan-ly',
+  path: '/quan-ly',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bang-gia': typeof BangGiaRoute
+  '/dang-nhap': typeof DangNhapRoute
+  '/doi-mat-khau': typeof DoiMatKhauRoute
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
+  '/quan-ly': typeof AuthenticatedQuanLyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bang-gia': typeof BangGiaRoute
+  '/dang-nhap': typeof DangNhapRoute
+  '/doi-mat-khau': typeof DoiMatKhauRoute
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
+  '/quan-ly': typeof AuthenticatedQuanLyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/bang-gia': typeof BangGiaRoute
+  '/dang-nhap': typeof DangNhapRoute
+  '/doi-mat-khau': typeof DoiMatKhauRoute
   '/lien-he': typeof LienHeRoute
   '/san-pham': typeof SanPhamRoute
+  '/_authenticated/quan-ly': typeof AuthenticatedQuanLyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bang-gia' | '/lien-he' | '/san-pham'
+  fullPaths:
+    | '/'
+    | '/bang-gia'
+    | '/dang-nhap'
+    | '/doi-mat-khau'
+    | '/lien-he'
+    | '/san-pham'
+    | '/quan-ly'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bang-gia' | '/lien-he' | '/san-pham'
-  id: '__root__' | '/' | '/bang-gia' | '/lien-he' | '/san-pham'
+  to:
+    | '/'
+    | '/bang-gia'
+    | '/dang-nhap'
+    | '/doi-mat-khau'
+    | '/lien-he'
+    | '/san-pham'
+    | '/quan-ly'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/bang-gia'
+    | '/dang-nhap'
+    | '/doi-mat-khau'
+    | '/lien-he'
+    | '/san-pham'
+    | '/_authenticated/quan-ly'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   BangGiaRoute: typeof BangGiaRoute
+  DangNhapRoute: typeof DangNhapRoute
+  DoiMatKhauRoute: typeof DoiMatKhauRoute
   LienHeRoute: typeof LienHeRoute
   SanPhamRoute: typeof SanPhamRoute
 }
@@ -78,11 +137,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/bang-gia': {
       id: '/bang-gia'
       path: '/bang-gia'
       fullPath: '/bang-gia'
       preLoaderRoute: typeof BangGiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dang-nhap': {
+      id: '/dang-nhap'
+      path: '/dang-nhap'
+      fullPath: '/dang-nhap'
+      preLoaderRoute: typeof DangNhapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/doi-mat-khau': {
+      id: '/doi-mat-khau'
+      path: '/doi-mat-khau'
+      fullPath: '/doi-mat-khau'
+      preLoaderRoute: typeof DoiMatKhauRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lien-he': {
@@ -99,12 +179,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SanPhamRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/quan-ly': {
+      id: '/_authenticated/quan-ly'
+      path: '/quan-ly'
+      fullPath: '/quan-ly'
+      preLoaderRoute: typeof AuthenticatedQuanLyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedQuanLyRoute: typeof AuthenticatedQuanLyRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedQuanLyRoute: AuthenticatedQuanLyRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   BangGiaRoute: BangGiaRoute,
+  DangNhapRoute: DangNhapRoute,
+  DoiMatKhauRoute: DoiMatKhauRoute,
   LienHeRoute: LienHeRoute,
   SanPhamRoute: SanPhamRoute,
 }

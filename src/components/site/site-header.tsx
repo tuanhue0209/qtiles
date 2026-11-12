@@ -3,6 +3,7 @@ import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { SHOP } from "@/lib/catalog";
+import { AuthAffordance } from "./auth-affordance";
 import { LogoMark } from "./logo";
 
 const NAV = [
@@ -35,6 +36,7 @@ export function SiteHeader() {
               {item.label}
             </Link>
           ))}
+          <AuthAffordance />
         </nav>
 
         <Button asChild size="sm">
@@ -57,6 +59,7 @@ export function SiteHeader() {
             {item.label}
           </Link>
         ))}
+        <AuthAffordance />
       </nav>
     </header>
   );
