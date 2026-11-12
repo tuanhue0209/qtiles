@@ -3,8 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 
 import type { Database } from "@/integrations/supabase/types";
 import { isCategoryId, type CategoryId, type Product } from "./catalog";
-
-export const IMAGE_BUCKET = "gach-anh";
+import { IMAGE_BUCKET } from "./product-media";
 
 type ProductRow = {
   id: string;
