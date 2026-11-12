@@ -10,33 +10,63 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BangGiaRouteImport } from './routes/bang-gia'
+import { Route as LienHeRouteImport } from './routes/lien-he'
+import { Route as SanPhamRouteImport } from './routes/san-pham'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BangGiaRoute = BangGiaRouteImport.update({
+  id: '/bang-gia',
+  path: '/bang-gia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LienHeRoute = LienHeRouteImport.update({
+  id: '/lien-he',
+  path: '/lien-he',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SanPhamRoute = SanPhamRouteImport.update({
+  id: '/san-pham',
+  path: '/san-pham',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
+  '/lien-he': typeof LienHeRoute
+  '/san-pham': typeof SanPhamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
+  '/lien-he': typeof LienHeRoute
+  '/san-pham': typeof SanPhamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bang-gia': typeof BangGiaRoute
+  '/lien-he': typeof LienHeRoute
+  '/san-pham': typeof SanPhamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/bang-gia' | '/lien-he' | '/san-pham'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/bang-gia' | '/lien-he' | '/san-pham'
+  id: '__root__' | '/' | '/bang-gia' | '/lien-he' | '/san-pham'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BangGiaRoute: typeof BangGiaRoute
+  LienHeRoute: typeof LienHeRoute
+  SanPhamRoute: typeof SanPhamRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bang-gia': {
+      id: '/bang-gia'
+      path: '/bang-gia'
+      fullPath: '/bang-gia'
+      preLoaderRoute: typeof BangGiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lien-he': {
+      id: '/lien-he'
+      path: '/lien-he'
+      fullPath: '/lien-he'
+      preLoaderRoute: typeof LienHeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/san-pham': {
+      id: '/san-pham'
+      path: '/san-pham'
+      fullPath: '/san-pham'
+      preLoaderRoute: typeof SanPhamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BangGiaRoute: BangGiaRoute,
+  LienHeRoute: LienHeRoute,
+  SanPhamRoute: SanPhamRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
