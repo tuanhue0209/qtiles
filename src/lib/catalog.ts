@@ -74,6 +74,8 @@ export type Product = {
   /** Giá tham khảo, VNĐ / m² */
   price: number;
   tag?: string | null;
+  /** Thứ tự hiển thị trong danh sách */
+  sortOrder: number;
   /** Đường dẫn ảnh trong kho ảnh, nếu có */
   imagePath?: string | null;
   /** Địa chỉ ảnh xem được, do server tạo khi trang tải */

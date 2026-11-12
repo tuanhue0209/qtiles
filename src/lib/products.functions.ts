@@ -16,6 +16,7 @@ type ProductRow = {
   price: number;
   tag: string | null;
   image_path: string | null;
+  sort_order: number;
 };
 
 function toProduct(row: ProductRow): Product {
@@ -28,6 +29,7 @@ function toProduct(row: ProductRow): Product {
     origin: row.origin,
     price: row.price,
     tag: row.tag,
+    sortOrder: row.sort_order,
     imagePath: row.image_path,
   };
 }
@@ -58,7 +60,7 @@ export const listProducts = createServerFn({ method: "GET" }).handler(async (): 
 
   const { data, error } = await client
     .from("products")
-    .select("id, name, category, size, finish, origin, price, tag, image_path")
+    .select("id, name, category, size, finish, origin, price, tag, image_path, sort_order")
     .order("sort_order", { ascending: true })
     .order("name", { ascending: true });
 
