@@ -61,8 +61,7 @@ function Index() {
               Gạch đẹp cho từng góc nhà bạn.
             </h1>
             <p className="mt-5 max-w-md text-lg text-primary-foreground/85">
-              Hơn 500 mẫu gạch lát nền, ốp tường, giả gỗ và gạch bông — giá tận kho, giao tận
-              công trình.
+              Rất nhiều mẫu gạch lát nền, ốp tường, giả gỗ và gạch bông — mà anh chị đang tìm kiếm cho công trình của mình
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="xl">
