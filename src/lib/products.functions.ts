@@ -77,7 +77,8 @@ export const listProducts = createServerFn({ method: "GET" }).handler(async (): 
         .from(IMAGE_BUCKET)
         .createSignedUrls(paths, 60 * 60);
       (signed ?? []).forEach((entry, i) => {
-        if (entry?.signedUrl) photoUrls.set(paths[i], entry.signedUrl);
+        const path = paths[i];
+        if (entry?.signedUrl && path) photoUrls.set(path, entry.signedUrl);
       });
     } catch {
       // Không có ảnh vẫn ổn: thẻ sản phẩm sẽ dùng ảnh minh họa của loại gạch.
