@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import { authErrorText } from "@/lib/auth-messages";
 
 export const Route = createFileRoute("/doi-mat-khau")({
   head: () => ({
@@ -42,7 +43,7 @@ function ResetPasswordPage() {
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) {
-        toast.error(error.message);
+        toast.error(authErrorText(error));
         return;
       }
       toast.success("Đã đổi mật khẩu");

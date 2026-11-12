@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import { authErrorText } from "@/lib/auth-messages";
 import { SHOP } from "@/lib/catalog";
 
 export const Route = createFileRoute("/dang-nhap")({
@@ -47,7 +48,7 @@ function SignInPage() {
       if (mode === "signin") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) {
-          toast.error("Email hoặc mật khẩu chưa đúng");
+          toast.error(authErrorText(error));
           return;
         }
         await navigate({ to: "/quan-ly" });
@@ -60,7 +61,7 @@ function SignInPage() {
         options: { emailRedirectTo: window.location.origin },
       });
       if (error) {
-        toast.error(error.message);
+        toast.error(authErrorText(error));
         return;
       }
       // Email xác nhận đang bật: chưa đăng nhập cho tới khi bấm link trong email.
@@ -83,7 +84,7 @@ function SignInPage() {
       redirectTo: `${window.location.origin}/doi-mat-khau`,
     });
     if (error) {
-      toast.error(error.message);
+      toast.error(authErrorText(error));
       return;
     }
     toast.success("Đã gửi email đặt lại mật khẩu");
