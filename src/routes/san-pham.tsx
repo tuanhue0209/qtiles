@@ -5,9 +5,10 @@ import { CATEGORIES, getCategory, isCategoryId, productsInCategory, type Categor
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/san-pham")({
-  validateSearch: (search: Record<string, unknown>): { loai?: CategoryId } => ({
-    loai: isCategoryId(search.loai) ? search.loai : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { loai?: CategoryId } => {
+    const loai = search["loai"];
+    return isCategoryId(loai) ? { loai } : {};
+  },
   head: () => ({
     meta: [
       { title: "Sản phẩm gạch ốp lát — QT tiles" },
