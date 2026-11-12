@@ -23,7 +23,9 @@ export function AuthAffordance() {
         setReady(true);
       }
     });
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setSignedIn(Boolean(session?.user));
       setReady(true);
     });
