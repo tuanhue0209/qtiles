@@ -1,10 +1,12 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Phone, Ruler, Truck } from "lucide-react";
 
 import heroImg from "@/assets/hero-showroom.jpg";
 import { ProductCard } from "@/components/site/product-card";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES, PRODUCTS, SHOP } from "@/lib/catalog";
+import { CATEGORIES, SHOP } from "@/lib/catalog";
+import { productsQueryOptions } from "@/lib/products.query";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -24,6 +26,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(productsQueryOptions),
   component: Index,
 });
 
@@ -34,7 +37,8 @@ const PERKS = [
 ];
 
 function Index() {
-  const featured = PRODUCTS.filter((p) => p.tag).slice(0, 4);
+  const { data: products } = useSuspenseQuery(productsQueryOptions);
+  const featured = products.filter((p) => p.tag).slice(0, 4);
 
   return (
     <>

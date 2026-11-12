@@ -3,11 +3,12 @@ import { SHOP } from "@/lib/catalog";
 
 export function ProductCard({ product }: { product: Product }) {
   const category = getCategory(product.category);
+  const photo = product.imageUrl ?? category.image;
   return (
     <article className="group flex flex-col overflow-hidden rounded-lg border bg-card shadow-tile transition-all hover:-translate-y-1 hover:shadow-lift">
       <div className="relative aspect-square overflow-hidden">
         <img
-          src={category.image}
+          src={photo}
           alt={product.name}
           loading="lazy"
           width={1024}

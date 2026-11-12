@@ -1,7 +1,9 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { ProductCard } from "@/components/site/product-card";
-import { CATEGORIES, getCategory, isCategoryId, productsInCategory, type CategoryId } from "@/lib/catalog";
+import { CATEGORIES, getCategory, isCategoryId, type CategoryId } from "@/lib/catalog";
+import { productsQueryOptions } from "@/lib/products.query";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/san-pham")({
@@ -23,12 +25,14 @@ export const Route = createFileRoute("/san-pham")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(productsQueryOptions),
   component: ProductsPage,
 });
 
 function ProductsPage() {
   const { loai } = Route.useSearch();
-  const products = productsInCategory(loai);
+  const { data: allProducts } = useSuspenseQuery(productsQueryOptions);
+  const products = loai ? allProducts.filter((p) => p.category === loai) : allProducts;
   const title = loai ? getCategory(loai).name : "Tất cả sản phẩm";
 
   const chip = (active: boolean) =>

@@ -1,8 +1,10 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { CATEGORIES, formatPrice, productsInCategory, SHOP } from "@/lib/catalog";
+import { CATEGORIES, formatPrice, SHOP } from "@/lib/catalog";
+import { productsQueryOptions } from "@/lib/products.query";
 
 export const Route = createFileRoute("/bang-gia")({
   head: () => ({
@@ -18,10 +20,13 @@ export const Route = createFileRoute("/bang-gia")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(productsQueryOptions),
   component: PricePage,
 });
 
 function PricePage() {
+  const { data: products } = useSuspenseQuery(productsQueryOptions);
+
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
       <p className="text-sm font-semibold uppercase tracking-widest text-primary">Bảng giá</p>
@@ -55,7 +60,7 @@ function PricePage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {productsInCategory(c.id).map((p) => (
+                  {products.filter((p) => p.category === c.id).map((p) => (
                     <tr key={p.id} className="border-t">
                       <td className="px-4 py-3 font-medium sm:px-6">{p.name}</td>
                       <td className="px-4 py-3 text-muted-foreground">{p.size}</td>

@@ -30,5 +30,7 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Project rules
-- Catalog, prices and shop contact info live in one data module (src/lib/catalog.ts); pages read from it so a price or phone change happens in one place.
+- Product rows (name, price, size, photo) live in the `products` table and are read through src/lib/products.query.ts, so one edit shows on every page; shop contact info and the six categories stay in src/lib/catalog.ts.
+- Product photos are stored in the private `gach-anh` bucket and reach the browser as short-lived signed URLs, because public buckets are blocked in this workspace.
+- Only accounts holding the admin role may add, edit or delete products; the first account created on the site gets that role through the signup trigger, so it must be the shop owner's own account.
 - Shared header/footer render in src/routes/__root.tsx around the Outlet; each page is its own route file with its own head().
