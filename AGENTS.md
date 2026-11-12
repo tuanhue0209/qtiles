@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Catalog, prices and shop contact info live in one data module (src/lib/catalog.ts); pages read from it so a price or phone change happens in one place.
+- Shared header/footer render in src/routes/__root.tsx around the Outlet; each page is its own route file with its own head().
