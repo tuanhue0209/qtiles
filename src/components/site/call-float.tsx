@@ -9,7 +9,7 @@ export function CallFloat() {
         href={SHOP.zaloHref}
         target="_blank"
         rel="noreferrer"
-        className="flex size-12 items-center justify-center rounded-full bg-forest font-display text-xs font-bold text-forest-foreground shadow-lift"
+        className="flex size-12 items-center justify-center rounded-full border-2 border-forest-foreground bg-forest font-display text-xs font-bold text-forest-foreground shadow-lift"
         aria-label="Nhắn Zalo"
       >
         Zalo
