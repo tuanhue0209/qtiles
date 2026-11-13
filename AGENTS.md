@@ -39,3 +39,6 @@ use the editor.
 - Product list and detail pages share the /san-pham layout; product slugs remain stable on edits to preserve links.
 - Admin editing uses focused category, product and inquiry tools with database RLS enforcing manager-only writes.
 - Serialize and restore the request-scoped Query cache through router hydration so shared catalog reads match the server-rendered content.
+- Bulk imports match products by normalized name, preserve existing slugs and unspecified fields, and reject ambiguous names so repeated imports update instead of duplicating rows.
+- Bulk image originals are mapped by normalized filename to deterministic encoded paths in the existing image bucket; compress to WebP in the browser to avoid native server dependencies.
+- Product pagination and all catalog filters live in validated URL search state so links restore the selected view.

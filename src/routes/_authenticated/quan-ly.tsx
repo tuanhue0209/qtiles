@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient, queryOptions } from "@tanstack/react-query";
 import { Pencil, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,7 +27,7 @@ function AdminProductsPage() {
   async function refresh() { await Promise.all([client.invalidateQueries({ queryKey: ["products"] }), client.invalidateQueries({ queryKey: ["categories"] }), client.invalidateQueries({ queryKey: ["product"] })]); }
   if (admin.isPending) return <p className="mx-auto max-w-6xl px-4 py-16">Đang kiểm tra tài khoản…</p>;
   if (!admin.data) return <div className="px-4 py-20 text-center"><h1 className="text-3xl">Tài khoản này chưa có quyền quản lý</h1><p className="mt-4">Vui lòng dùng tài khoản quản lý của cửa hàng.</p></div>;
-  return <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6"><p className="eyebrow text-primary">Cửa hàng</p><h1 className="mt-3 text-5xl">Quản lý QT tiles</h1>
+  return <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6"><p className="eyebrow text-primary">Cửa hàng</p><div className="flex flex-wrap items-center justify-between gap-4"><h1 className="mt-3 text-5xl">Quản lý QT tiles</h1><Button asChild variant="outline"><Link to="/admin">Nhập CSV và ảnh</Link></Button></div>
     {(productError || categoryError) && <p className="mt-4 text-destructive">Chưa tải được danh sách. Vui lòng tải lại trang.</p>}
     <Tabs defaultValue="products" className="mt-8"><TabsList className="flex h-auto w-full flex-wrap justify-start gap-1 sm:w-auto"><TabsTrigger value="products">Sản phẩm ({products.length})</TabsTrigger><TabsTrigger value="categories">Danh mục ({categories.length})</TabsTrigger><TabsTrigger value="inquiries">Yêu cầu báo giá</TabsTrigger><TabsTrigger value="shop">Thông tin cửa hàng</TabsTrigger></TabsList>
       <TabsContent value="shop" className="mt-6"><ShopSettingsForm /></TabsContent>
