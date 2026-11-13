@@ -13,6 +13,10 @@ export const Route = createFileRoute("/doi-mat-khau")({
     meta: [
       { title: "Đặt lại mật khẩu — QT tiles" },
       { name: "description", content: "Đặt mật khẩu mới cho tài khoản quản lý QT tiles." },
+      { property: "og:title", content: "Đặt lại mật khẩu — QT tiles" },
+      { property: "og:description", content: "Đặt mật khẩu mới cho tài khoản quản lý QT tiles." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

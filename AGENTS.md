@@ -38,3 +38,4 @@ use the editor.
 - Category slugs remain stable when names change; product references prevent deleting a category in use.
 - Product list and detail pages share the /san-pham layout; product slugs remain stable on edits to preserve links.
 - Admin editing uses focused category, product and inquiry tools with database RLS enforcing manager-only writes.
+- Serialize and restore the request-scoped Query cache through router hydration so shared catalog reads match the server-rendered content.
