@@ -43,7 +43,7 @@ export function ProductCard({ product, category }: { product: Product; category?
           </Link>
         </h3>
         <p className="mt-1 text-sm text-muted-foreground">
-          {product.size} · {product.finish}
+          {product.size} · {product.finish}{product.origin ? ` · ${product.origin}` : ""}
         </p>
 
         <div className="mt-auto flex flex-wrap items-end justify-between gap-2 pt-4">
