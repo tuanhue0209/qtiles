@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { SHOP } from "@/lib/catalog";
+import { useShop } from "@/hooks/use-shop";
 import { AuthAffordance } from "./auth-affordance";
 import { LogoMark } from "./logo";
 
@@ -14,6 +14,7 @@ const NAV = [
 ] as const;
 
 export function SiteHeader() {
+  const SHOP = useShop();
   return (
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">

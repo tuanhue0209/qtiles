@@ -11,6 +11,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import { categoriesQueryOptions } from "@/lib/products.query";
+import { shopQueryOptions } from "@/hooks/use-shop";
 import appCss from "../styles.css?url";
 import { SiteHeader } from "../components/site/site-header";
 import { SiteFooter } from "../components/site/site-footer";
@@ -106,7 +107,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(categoriesQueryOptions),
+  loader: ({ context }) => Promise.all([context.queryClient.ensureQueryData(categoriesQueryOptions), context.queryClient.ensureQueryData(shopQueryOptions)]),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

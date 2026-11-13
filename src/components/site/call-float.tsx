@@ -1,8 +1,9 @@
 import { Phone } from "lucide-react";
 
-import { SHOP } from "@/lib/catalog";
+import { useShop } from "@/hooks/use-shop";
 
 export function CallFloat() {
+  const SHOP = useShop();
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2">
       <a

@@ -3,10 +3,11 @@ import { Clock, MapPin, Phone } from "lucide-react";
 
 import { useQuery } from "@tanstack/react-query";
 import { categoriesQueryOptions } from "@/lib/products.query";
-import { SHOP } from "@/lib/catalog";
+import { useShop } from "@/hooks/use-shop";
 import { LogoMark } from "./logo";
 
 export function SiteFooter() {
+  const SHOP = useShop();
   const { data: categories = [] } = useQuery(categoriesQueryOptions);
   return (
     <footer className="bg-forest text-forest-foreground">
@@ -17,7 +18,7 @@ export function SiteFooter() {
             <span className="font-display text-xl font-bold">QT tiles</span>
           </div>
           <p className="mt-4 max-w-xs text-sm text-forest-foreground/75">
-            Gạch ốp lát chính hãng cho nhà phố, căn hộ và công trình tại Sài Gòn.
+            {SHOP.slogan}
           </p>
         </div>
 

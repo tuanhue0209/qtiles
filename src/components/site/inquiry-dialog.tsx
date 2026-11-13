@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { SHOP } from "@/lib/catalog";
+import { useShop } from "@/hooks/use-shop";
 import { supabase } from "@/integrations/supabase/client";
 
 /** Mẫu gạch mà khách đang hỏi giá. */
@@ -33,6 +33,7 @@ export function InquiryDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const SHOP = useShop();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");

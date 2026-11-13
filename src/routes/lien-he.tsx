@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { SHOP } from "@/lib/catalog";
+import { useShop } from "@/hooks/use-shop";
 
 export const Route = createFileRoute("/lien-he")({
   head: () => ({
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/lien-he")({
       { title: "Liên hệ QT tiles — Gạch ốp lát Sài Gòn" },
       {
         name: "description",
-        content: `Gọi ${SHOP.phone} hoặc nhắn Zalo để được tư vấn và báo giá gạch ốp lát tại TP. Hồ Chí Minh.`,
+        content: "Gọi điện hoặc nhắn Zalo để được tư vấn và báo giá gạch ốp lát tại TP. Hồ Chí Minh.",
       },
       { property: "og:title", content: "Liên hệ QT tiles" },
       { property: "og:description", content: "Số điện thoại, Zalo, địa chỉ showroom và giờ mở cửa." },
@@ -22,6 +22,7 @@ export const Route = createFileRoute("/lien-he")({
 });
 
 function ContactPage() {
+  const SHOP = useShop();
   return (
     <div className="bg-grout">
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-20">
@@ -49,7 +50,7 @@ function ContactPage() {
           <div className="rounded-xl bg-forest p-8 text-forest-foreground shadow-lift">
             <MessageCircle className="size-7" />
             <p className="mt-6 text-sm uppercase tracking-widest text-forest-foreground/75">Zalo</p>
-            <p className="mt-1 font-display text-4xl font-bold">{SHOP.phone}</p>
+            <p className="mt-1 font-display text-4xl font-bold">{SHOP.zalo}</p>
             <Button asChild size="lg" className="mt-6">
               <a href={SHOP.zaloHref} target="_blank" rel="noreferrer">
                 Nhắn Zalo

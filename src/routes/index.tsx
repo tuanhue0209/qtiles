@@ -5,7 +5,8 @@ import { ArrowRight, BadgeCheck, Phone, Ruler, Truck } from "lucide-react";
 import heroImg from "@/assets/hero-showroom.jpg";
 import { ProductCard } from "@/components/site/product-card";
 import { Button } from "@/components/ui/button";
-import { categoryPhoto, SHOP } from "@/lib/catalog";
+import { categoryPhoto } from "@/lib/catalog";
+import { useShop } from "@/hooks/use-shop";
 import { categoriesQueryOptions, productsQueryOptions } from "@/lib/products.query";
 
 export const Route = createFileRoute("/")({
@@ -37,6 +38,7 @@ const PERKS = [
 ];
 
 function Index() {
+  const SHOP = useShop();
   const { data: products } = useSuspenseQuery(productsQueryOptions);
   const { data: categories } = useSuspenseQuery(categoriesQueryOptions);
   const featured = products.filter((p) => p.tag).slice(0, 4);
@@ -62,7 +64,7 @@ function Index() {
               QT tiles
             </h1>
             <p className="mt-5 max-w-md text-lg text-primary-foreground/85">
-              Gạch lát nền, ốp tường, trang trí và khổ lớn cho những không gian sống mang dấu ấn riêng.
+              {SHOP.slogan}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="xl">
