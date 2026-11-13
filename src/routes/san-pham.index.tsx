@@ -1,10 +1,11 @@
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/site/product-card";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -18,7 +19,7 @@ import {
   facetOptions,
   filterProducts,
   hasActiveFilter,
-  type ProductFilter,
+  paginateProducts,
 } from "@/lib/product-filters";
 import { categoriesQueryOptions, productsQueryOptions } from "@/lib/products.query";
 import { cn } from "@/lib/utils";
@@ -29,9 +30,18 @@ type FilterSearch = {
   mau?: string | undefined;
   mat?: string | undefined;
   xu?: string | undefined;
+  giaTu?: number | undefined;
+  giaDen?: number | undefined;
+  trang?: number | undefined;
 };
 
-const EMPTY: FilterSearch = { loai: undefined, kich: undefined, mau: undefined, mat: undefined, xu: undefined };
+const EMPTY: FilterSearch = { loai: undefined, kich: undefined, mau: undefined, mat: undefined, xu: undefined, giaTu: undefined, giaDen: undefined, trang: undefined };
+
+function readNumber(value: unknown): number | undefined {
+  if (value === undefined || value === "") return undefined;
+  const number = Number(value);
+  return Number.isFinite(number) ? number : undefined;
+}
 
 function readText(search: Record<string, unknown>, key: string): string | undefined {
   const value = search[key];
@@ -45,6 +55,9 @@ export const Route = createFileRoute("/san-pham/")({
     mau: readText(search, "mau"),
     mat: readText(search, "mat"),
     xu: readText(search, "xu"),
+    giaTu: readNumber(search["giaTu"]),
+    giaDen: readNumber(search["giaDen"]),
+    trang: readNumber(search["trang"]),
   }),
   head: () => ({
     meta: [
@@ -100,14 +113,15 @@ function FacetSelect({
 function ProductsPage() {
   const filter = Route.useSearch();
   const navigate = Route.useNavigate();
-  const applyFilter = (next: FilterSearch) => { void navigate({ search: { ...EMPTY, ...next } }); };
+  const applyFilter = (next: FilterSearch) => { void navigate({ search: { ...EMPTY, ...next, trang: 1 } }); };
   const { data: allProducts } = useSuspenseQuery(productsQueryOptions);
   const { data: categories } = useQuery(categoriesQueryOptions);
 
   const list = categories ?? [];
   const bySlug = new Map<string, Category>(list.map((c) => [c.slug, c]));
   const shown = filterProducts(allProducts, filter);
-  const active = hasActiveFilter(filter);
+  const paginated = paginateProducts(shown, filter.trang ?? 1);
+  const active = hasActiveFilter({ ...filter, giaTu: filter.giaTu, giaDen: filter.giaDen, ...{ trang: undefined } });
 
   const chip = (isActive: boolean) =>
     cn(
@@ -142,6 +156,11 @@ function ProductsPage() {
         ))}
       </div>
 
+      <div className="mt-4 grid max-w-lg grid-cols-2 gap-4">
+        <div><Label htmlFor="price-from" className="eyebrow text-muted-foreground">Giá từ (VNĐ/m²)</Label><Input id="price-from" className="mt-2 bg-card" type="number" min="0" step="1000" value={filter.giaTu ?? ""} onChange={(e) => applyFilter({ ...filter, giaTu: e.target.value === "" ? undefined : Math.max(0, Number(e.target.value)) })} /></div>
+        <div><Label htmlFor="price-to" className="eyebrow text-muted-foreground">Giá đến (VNĐ/m²)</Label><Input id="price-to" className="mt-2 bg-card" type="number" min="0" step="1000" value={filter.giaDen ?? ""} onChange={(e) => applyFilter({ ...filter, giaDen: e.target.value === "" ? undefined : Math.max(0, Number(e.target.value)) })} /></div>
+      </div>
+
       {/* Bộ lọc */}
       <div className="mt-6 grid gap-4 border-y py-6 sm:grid-cols-2 lg:grid-cols-4">
         {FACETS.map((facet) => (
@@ -174,11 +193,13 @@ function ProductsPage() {
         </div>
       ) : (
         <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-          {shown.map((p) => (
+          {paginated.products.map((p) => (
             <ProductCard key={p.id} product={p} category={bySlug.get(p.category)} />
           ))}
         </div>
       )}
+
+      {shown.length > 0 && <nav aria-label="Phân trang sản phẩm" className="mt-8 flex items-center justify-center gap-4"><Button variant="outline" size="icon" aria-label="Trang trước" disabled={paginated.page === 1} onClick={() => { void navigate({ search: { ...filter, trang: paginated.page - 1 } }); }}><ChevronLeft /></Button><span className="text-sm">Trang {paginated.page} / {paginated.totalPages}</span><Button variant="outline" size="icon" aria-label="Trang sau" disabled={paginated.page === paginated.totalPages} onClick={() => { void navigate({ search: { ...filter, trang: paginated.page + 1 } }); }}><ChevronRight /></Button></nav>}
 
       {/* Danh mục khác, dành cho khách đã xem hết danh sách */}
       {list.length > 1 && (

@@ -7,6 +7,8 @@ export type ProductFilter = {
   mau?: string | undefined;
   mat?: string | undefined;
   xu?: string | undefined;
+  giaTu?: number | undefined;
+  giaDen?: number | undefined;
 };
 
 export type FacetField = "size" | "color" | "finish" | "origin";
@@ -27,7 +29,9 @@ export function filterProducts(products: Product[], filter: ProductFilter): Prod
       (!filter.kich || p.size === filter.kich) &&
       (!filter.mau || p.color === filter.mau) &&
       (!filter.mat || p.finish === filter.mat) &&
-      (!filter.xu || p.origin === filter.xu),
+      (!filter.xu || p.origin === filter.xu) &&
+      (filter.giaTu === undefined || p.price >= filter.giaTu) &&
+      (filter.giaDen === undefined || p.price <= filter.giaDen),
   );
 }
 
@@ -42,5 +46,12 @@ export function facetOptions(products: Product[], field: FacetField): string[] {
 }
 
 export function hasActiveFilter(filter: ProductFilter): boolean {
-  return Object.values(filter).some((value) => Boolean(value));
+  return Object.values(filter).some((value) => value !== undefined && value !== "");
+}
+
+export const PRODUCTS_PER_PAGE = 12;
+export function paginateProducts(products: Product[], requestedPage: number) {
+  const totalPages = Math.max(1, Math.ceil(products.length / PRODUCTS_PER_PAGE));
+  const page = Math.max(1, Math.min(totalPages, Number.isFinite(requestedPage) ? Math.floor(requestedPage) : 1));
+  return { page, totalPages, products: products.slice((page - 1) * PRODUCTS_PER_PAGE, page * PRODUCTS_PER_PAGE) };
 }
