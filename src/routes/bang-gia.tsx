@@ -3,7 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { formatPrice, SHOP } from "@/lib/catalog";
+import { formatPrice } from "@/lib/catalog";
+import { useShop } from "@/hooks/use-shop";
 import { categoriesQueryOptions, productsQueryOptions } from "@/lib/products.query";
 
 export const Route = createFileRoute("/bang-gia")({
@@ -25,6 +26,7 @@ export const Route = createFileRoute("/bang-gia")({
 });
 
 function PricePage() {
+  const SHOP = useShop();
   const { data: products } = useSuspenseQuery(productsQueryOptions);
   const { data: categories } = useSuspenseQuery(categoriesQueryOptions);
 

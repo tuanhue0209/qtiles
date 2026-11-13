@@ -6,7 +6,8 @@ import { ArrowLeft, MessageCircle, Phone } from "lucide-react";
 import { InquiryDialog } from "@/components/site/inquiry-dialog";
 import { ProductCard } from "@/components/site/product-card";
 import { Button } from "@/components/ui/button";
-import { categoryPhoto, formatPrice, SHOP, type Category } from "@/lib/catalog";
+import { categoryPhoto, formatPrice, type Category } from "@/lib/catalog";
+import { useShop } from "@/hooks/use-shop";
 import { categoriesQueryOptions, productPageQueryOptions } from "@/lib/products.query";
 
 function metaText(value: string, max: number): string {
@@ -44,6 +45,7 @@ export const Route = createFileRoute("/san-pham/$slug")({
 });
 
 function ProductDetailPage() {
+  const SHOP = useShop();
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(productPageQueryOptions(slug));
   const { data: categories } = useQuery(categoriesQueryOptions);
