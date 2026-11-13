@@ -147,6 +147,36 @@ export type Database = {
           },
         ]
       }
+      shop_settings: {
+        Row: {
+          address: string
+          hours: string
+          id: boolean
+          phone: string
+          slogan: string
+          updated_at: string
+          zalo: string
+        }
+        Insert: {
+          address?: string
+          hours?: string
+          id?: boolean
+          phone?: string
+          slogan?: string
+          updated_at?: string
+          zalo?: string
+        }
+        Update: {
+          address?: string
+          hours?: string
+          id?: boolean
+          phone?: string
+          slogan?: string
+          updated_at?: string
+          zalo?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
