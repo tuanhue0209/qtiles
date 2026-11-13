@@ -6,7 +6,7 @@ import { ArrowLeft, MessageCircle, Phone } from "lucide-react";
 import { InquiryDialog } from "@/components/site/inquiry-dialog";
 import { ProductCard } from "@/components/site/product-card";
 import { Button } from "@/components/ui/button";
-import { categoryPhoto, formatPrice, type Category } from "@/lib/catalog";
+import { categoryPhoto, type Category } from "@/lib/catalog";
 import { useShop } from "@/hooks/use-shop";
 import { categoriesQueryOptions, productPageQueryOptions } from "@/lib/products.query";
 
