@@ -27,13 +27,13 @@ export function ShopSettingsForm() {
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (digitsOnly(form.phone).length < 8) return toast.error("Số điện thoại chưa đúng.");
-    if (form.zalo && digitsOnly(form.zalo).length < 8) return toast.error("Số Zalo chưa đúng.");
+    if (digitsOnly(form.phone).length < 8) { toast.error("Số điện thoại chưa đúng."); return; }
+    if (form.zalo && digitsOnly(form.zalo).length < 8) { toast.error("Số Zalo chưa đúng."); return; }
     setSaving(true);
     const values = { phone: form.phone.trim(), zalo: form.zalo.trim(), address: form.address.trim(), hours: form.hours.trim(), slogan: form.slogan.trim(), updated_at: new Date().toISOString() };
     const { error } = await supabase.from("shop_settings").upsert({ id: true, ...values });
     setSaving(false);
-    if (error) return toast.error("Chưa lưu được. Vui lòng thử lại.");
+    if (error) { toast.error("Chưa lưu được. Vui lòng thử lại."); return; }
     await client.invalidateQueries({ queryKey: ["shop"] });
     toast.success("Đã lưu thông tin cửa hàng.");
   }
