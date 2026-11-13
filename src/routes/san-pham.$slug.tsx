@@ -6,7 +6,7 @@ import { ArrowLeft, MessageCircle, Phone } from "lucide-react";
 import { InquiryDialog } from "@/components/site/inquiry-dialog";
 import { ProductCard } from "@/components/site/product-card";
 import { Button } from "@/components/ui/button";
-import { categoryPhoto, formatPrice, type Category } from "@/lib/catalog";
+import { categoryPhoto, type Category } from "@/lib/catalog";
 import { useShop } from "@/hooks/use-shop";
 import { categoriesQueryOptions, productPageQueryOptions } from "@/lib/products.query";
 
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/san-pham/$slug")({
     const product = loaderData?.product;
     const photo = product?.photos[0];
     const description = product
-      ? metaText(product.description || `${product.name}, ${product.size}, ${product.finish}. Giá tham khảo ${formatPrice(product.price)}/m².`, 158)
+      ? metaText(product.description || `${product.name}, ${product.size}, ${product.finish}. Liên hệ QT tiles để nhận báo giá mới nhất.`, 158)
       : "Mẫu gạch này không còn trên website QT tiles.";
 
     const meta = [
