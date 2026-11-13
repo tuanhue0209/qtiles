@@ -13,7 +13,7 @@ export type ProductFilter = {
 
 export type FacetField = "size" | "color" | "finish" | "origin";
 
-export const FACETS: { key: keyof ProductFilter; field: FacetField; label: string }[] = [
+export const FACETS: { key: "kich" | "mau" | "mat" | "xu"; field: FacetField; label: string }[] = [
   { key: "kich", field: "size", label: "Kích thước" },
   { key: "mau", field: "color", label: "Màu sắc" },
   { key: "mat", field: "finish", label: "Bề mặt" },

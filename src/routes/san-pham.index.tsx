@@ -121,7 +121,8 @@ function ProductsPage() {
   const bySlug = new Map<string, Category>(list.map((c) => [c.slug, c]));
   const shown = filterProducts(allProducts, filter);
   const paginated = paginateProducts(shown, filter.trang ?? 1);
-  const active = hasActiveFilter({ ...filter, giaTu: filter.giaTu, giaDen: filter.giaDen, ...{ trang: undefined } });
+  const { trang: _page, ...conditions } = filter;
+  const active = hasActiveFilter(conditions);
 
   const chip = (isActive: boolean) =>
     cn(
