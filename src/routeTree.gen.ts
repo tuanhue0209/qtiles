@@ -17,6 +17,8 @@ import { Route as DoiMatKhauRouteImport } from './routes/doi-mat-khau'
 import { Route as LienHeRouteImport } from './routes/lien-he'
 import { Route as SanPhamRouteImport } from './routes/san-pham'
 import { Route as AuthenticatedQuanLyRouteImport } from './routes/_authenticated/quan-ly'
+import { Route as SanPhamIndexRouteImport } from './routes/san-pham.index'
+import { Route as SanPhamSlugRouteImport } from './routes/san-pham.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -57,6 +59,16 @@ const AuthenticatedQuanLyRoute = AuthenticatedQuanLyRouteImport.update({
   path: '/quan-ly',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const SanPhamIndexRoute = SanPhamIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SanPhamRoute,
+} as any)
+const SanPhamSlugRoute = SanPhamSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SanPhamRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -64,8 +76,10 @@ export interface FileRoutesByFullPath {
   '/dang-nhap': typeof DangNhapRoute
   '/doi-mat-khau': typeof DoiMatKhauRoute
   '/lien-he': typeof LienHeRoute
-  '/san-pham': typeof SanPhamRoute
+  '/san-pham': typeof SanPhamRouteWithChildren
   '/quan-ly': typeof AuthenticatedQuanLyRoute
+  '/san-pham/$slug': typeof SanPhamSlugRoute
+  '/san-pham/': typeof SanPhamIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -73,8 +87,9 @@ export interface FileRoutesByTo {
   '/dang-nhap': typeof DangNhapRoute
   '/doi-mat-khau': typeof DoiMatKhauRoute
   '/lien-he': typeof LienHeRoute
-  '/san-pham': typeof SanPhamRoute
   '/quan-ly': typeof AuthenticatedQuanLyRoute
+  '/san-pham/$slug': typeof SanPhamSlugRoute
+  '/san-pham': typeof SanPhamIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -84,8 +99,10 @@ export interface FileRoutesById {
   '/dang-nhap': typeof DangNhapRoute
   '/doi-mat-khau': typeof DoiMatKhauRoute
   '/lien-he': typeof LienHeRoute
-  '/san-pham': typeof SanPhamRoute
+  '/san-pham': typeof SanPhamRouteWithChildren
   '/_authenticated/quan-ly': typeof AuthenticatedQuanLyRoute
+  '/san-pham/$slug': typeof SanPhamSlugRoute
+  '/san-pham/': typeof SanPhamIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,6 +114,8 @@ export interface FileRouteTypes {
     | '/lien-he'
     | '/san-pham'
     | '/quan-ly'
+    | '/san-pham/$slug'
+    | '/san-pham/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -104,8 +123,9 @@ export interface FileRouteTypes {
     | '/dang-nhap'
     | '/doi-mat-khau'
     | '/lien-he'
-    | '/san-pham'
     | '/quan-ly'
+    | '/san-pham/$slug'
+    | '/san-pham'
   id:
     | '__root__'
     | '/'
@@ -116,6 +136,8 @@ export interface FileRouteTypes {
     | '/lien-he'
     | '/san-pham'
     | '/_authenticated/quan-ly'
+    | '/san-pham/$slug'
+    | '/san-pham/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -125,7 +147,7 @@ export interface RootRouteChildren {
   DangNhapRoute: typeof DangNhapRoute
   DoiMatKhauRoute: typeof DoiMatKhauRoute
   LienHeRoute: typeof LienHeRoute
-  SanPhamRoute: typeof SanPhamRoute
+  SanPhamRoute: typeof SanPhamRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -186,6 +208,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedQuanLyRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/san-pham/': {
+      id: '/san-pham/'
+      path: '/'
+      fullPath: '/san-pham/'
+      preLoaderRoute: typeof SanPhamIndexRouteImport
+      parentRoute: typeof SanPhamRoute
+    }
+    '/san-pham/$slug': {
+      id: '/san-pham/$slug'
+      path: '/$slug'
+      fullPath: '/san-pham/$slug'
+      preLoaderRoute: typeof SanPhamSlugRouteImport
+      parentRoute: typeof SanPhamRoute
+    }
   }
 }
 
@@ -200,6 +236,19 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
+interface SanPhamRouteChildren {
+  SanPhamSlugRoute: typeof SanPhamSlugRoute
+  SanPhamIndexRoute: typeof SanPhamIndexRoute
+}
+
+const SanPhamRouteChildren: SanPhamRouteChildren = {
+  SanPhamSlugRoute: SanPhamSlugRoute,
+  SanPhamIndexRoute: SanPhamIndexRoute,
+}
+
+const SanPhamRouteWithChildren =
+  SanPhamRoute._addFileChildren(SanPhamRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -207,7 +256,7 @@ const rootRouteChildren: RootRouteChildren = {
   DangNhapRoute: DangNhapRoute,
   DoiMatKhauRoute: DoiMatKhauRoute,
   LienHeRoute: LienHeRoute,
-  SanPhamRoute: SanPhamRoute,
+  SanPhamRoute: SanPhamRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
