@@ -47,10 +47,7 @@ export function ProductCard({ product, category }: { product: Product; category?
         </p>
 
         <div className="mt-auto flex flex-wrap items-end justify-between gap-2 pt-4">
-          <p className="font-display text-xl font-medium text-primary sm:text-2xl">
-            {formatPrice(product.price)}
-            <span className="ml-1 font-sans text-xs font-normal text-muted-foreground">/m²</span>
-          </p>
+          <p className="font-display text-xl font-medium text-primary sm:text-2xl">Liên hệ</p>
           <a
             href={SHOP.zaloHref}
             target="_blank"
