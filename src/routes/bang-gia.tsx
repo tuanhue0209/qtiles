@@ -1,9 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Phone } from "lucide-react";
+import { MessageCircle, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { formatPrice } from "@/lib/catalog";
 import { useShop } from "@/hooks/use-shop";
 import { categoriesQueryOptions, productsQueryOptions } from "@/lib/products.query";
 
@@ -35,7 +34,7 @@ function PricePage() {
       <p className="text-sm font-semibold uppercase tracking-widest text-primary">Bảng giá</p>
       <h1 className="mt-2 text-4xl font-bold sm:text-5xl">Bảng giá gạch ốp lát</h1>
       <p className="mt-3 max-w-2xl text-muted-foreground">
-        Giá tham khảo theo m², chưa gồm vận chuyển và thi công. Công trình số lượng lớn vui lòng gọi
+        Nhắn Zalo để nhận báo giá mới nhất cho từng mẫu. Công trình số lượng lớn vui lòng gọi
         để nhận giá sỉ tốt nhất.
       </p>
 
@@ -59,7 +58,8 @@ function PricePage() {
                     <th className="px-4 py-3 font-medium sm:px-6">Tên sản phẩm</th>
                     <th className="px-4 py-3 font-medium">Kích thước</th>
                     <th className="px-4 py-3 font-medium">Bề mặt</th>
-                    <th className="px-4 py-3 text-right font-medium sm:px-6">Giá / m²</th>
+                    <th className="px-4 py-3 font-medium">Xuất xứ</th>
+                    <th className="px-4 py-3 text-right font-medium sm:px-6">Báo giá</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,8 +68,17 @@ function PricePage() {
                       <td className="px-4 py-3 font-medium sm:px-6">{p.name}</td>
                       <td className="px-4 py-3 text-muted-foreground">{p.size}</td>
                       <td className="px-4 py-3 text-muted-foreground">{p.finish}</td>
-                      <td className="px-4 py-3 text-right font-display font-bold text-primary sm:px-6">
-                        {formatPrice(p.price)}
+                      <td className="px-4 py-3 text-muted-foreground">{p.origin || "—"}</td>
+                      <td className="px-4 py-3 text-right sm:px-6">
+                        <a
+                          href={SHOP.zaloHref}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`Nhắn Zalo hỏi giá ${p.name}`}
+                          className="inline-flex items-center gap-1.5 font-semibold text-primary hover:underline"
+                        >
+                          <MessageCircle className="size-4" /> Hỏi giá Zalo
+                        </a>
                       </td>
                     </tr>
                   ))}
