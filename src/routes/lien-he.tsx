@@ -50,7 +50,7 @@ function ContactPage() {
           <div className="rounded-xl bg-forest p-8 text-forest-foreground shadow-lift">
             <MessageCircle className="size-7" />
             <p className="mt-6 text-sm uppercase tracking-widest text-forest-foreground/75">Zalo</p>
-            <p className="mt-1 font-display text-4xl font-bold">{SHOP.phone}</p>
+            <p className="mt-1 font-display text-4xl font-bold">{SHOP.zalo}</p>
             <Button asChild size="lg" className="mt-6">
               <a href={SHOP.zaloHref} target="_blank" rel="noreferrer">
                 Nhắn Zalo
