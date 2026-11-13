@@ -123,10 +123,7 @@ function ProductDetailPage() {
         <div>
           <p className="eyebrow text-primary">{category?.name ?? "Gạch"}</p>
           <h1 className="mt-3 text-4xl sm:text-5xl">{product.name}</h1>
-          <p className="mt-4 font-display text-4xl font-medium text-primary">
-            {formatPrice(product.price)}
-            <span className="ml-2 font-sans text-sm font-normal text-muted-foreground">/ m²</span>
-          </p>
+          <p className="mt-4 font-display text-4xl font-medium text-primary">Liên hệ</p>
 
           {product.description && (
             <p className="mt-6 leading-relaxed text-muted-foreground">{product.description}</p>
@@ -158,7 +155,7 @@ function ProductDetailPage() {
           </Button>
 
           <p className="mt-4 text-xs text-muted-foreground">
-            Giá trên là giá tham khảo tại showroom, chưa gồm vận chuyển và thi công.
+            Gọi điện hoặc nhắn Zalo để nhận báo giá mới nhất theo số lượng.
           </p>
         </div>
       </div>
