@@ -5,8 +5,8 @@ import { ArrowRight, BadgeCheck, Phone, Ruler, Truck } from "lucide-react";
 import heroImg from "@/assets/hero-showroom.jpg";
 import { ProductCard } from "@/components/site/product-card";
 import { Button } from "@/components/ui/button";
-import { CATEGORIES, SHOP } from "@/lib/catalog";
-import { productsQueryOptions } from "@/lib/products.query";
+import { categoryPhoto, SHOP } from "@/lib/catalog";
+import { categoriesQueryOptions, productsQueryOptions } from "@/lib/products.query";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,6 +38,7 @@ const PERKS = [
 
 function Index() {
   const { data: products } = useSuspenseQuery(productsQueryOptions);
+  const { data: categories } = useSuspenseQuery(categoriesQueryOptions);
   const featured = products.filter((p) => p.tag).slice(0, 4);
 
   return (
@@ -52,16 +53,16 @@ function Index() {
           className="absolute inset-0 -z-10 size-full object-cover"
         />
         <div className="absolute inset-0 -z-10 bg-hero-overlay" />
-        <div className="mx-auto max-w-6xl px-4 py-24 sm:px-6 md:py-36">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
           <div className="max-w-xl animate-rise text-primary-foreground">
             <p className="inline-flex items-center gap-2 rounded-sm bg-primary px-3 py-1 text-xs font-semibold uppercase tracking-widest">
               Showroom gạch ốp lát · Sài Gòn
             </p>
-            <h1 className="mt-6 text-4xl font-bold leading-[1.05] text-balance-pretty sm:text-6xl">
-              Gạch đẹp cho từng góc nhà bạn.
+            <h1 className="mt-6 text-5xl leading-[1.05] text-balance-pretty sm:text-6xl">
+              QT tiles
             </h1>
             <p className="mt-5 max-w-md text-lg text-primary-foreground/85">
-              Rất nhiều mẫu gạch lát nền, ốp tường, giả gỗ và gạch bông — mà anh chị đang tìm kiếm cho công trình của mình
+              Gạch lát nền, ốp tường, trang trí và khổ lớn cho những không gian sống mang dấu ấn riêng.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild variant="hero" size="xl">
@@ -91,16 +92,16 @@ function Index() {
           </Link>
         </div>
 
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-          {CATEGORIES.map((c) => (
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {categories.map((c) => (
             <Link
               key={c.id}
               to="/san-pham"
-              search={{ loai: c.id }}
-              className="group relative isolate aspect-[4/5] overflow-hidden rounded-lg sm:aspect-[4/3]"
+              search={{ loai: c.slug }}
+              className="group relative isolate aspect-[4/5] overflow-hidden rounded-sm sm:aspect-[4/5]"
             >
               <img
-                src={c.image}
+                src={categoryPhoto(c)}
                 alt={c.name}
                 loading="lazy"
                 width={1024}
@@ -124,7 +125,7 @@ function Index() {
           <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Mẫu được chọn nhiều nhất</h2>
           <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             {featured.map((p) => (
-              <ProductCard key={p.id} product={p} />
+              <ProductCard key={p.id} product={p} category={categories.find((c) => c.slug === p.category)} />
             ))}
           </div>
         </div>
@@ -145,7 +146,7 @@ function Index() {
 
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-6">
-        <div className="flex flex-col items-start justify-between gap-6 rounded-xl bg-primary p-8 text-primary-foreground sm:p-12 md:flex-row md:items-center">
+        <div className="flex flex-col items-start justify-between gap-6 bg-primary p-8 text-primary-foreground sm:p-12 md:flex-row md:items-center">
           <div>
             <h2 className="text-2xl font-bold sm:text-3xl">Cần báo giá cho công trình?</h2>
             <p className="mt-2 text-primary-foreground/85">

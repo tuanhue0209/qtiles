@@ -2,11 +2,11 @@ import type { Product } from "./catalog";
 
 export type ProductFilter = {
   /** slug danh mục */
-  loai?: string;
-  kich?: string;
-  mau?: string;
-  mat?: string;
-  xu?: string;
+  loai?: string | undefined;
+  kich?: string | undefined;
+  mau?: string | undefined;
+  mat?: string | undefined;
+  xu?: string | undefined;
 };
 
 export type FacetField = "size" | "color" | "finish" | "origin";

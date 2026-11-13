@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { CATEGORIES } from "@/lib/catalog";
+const categories = [{ slug: "lat-nen" }, { slug: "op-tuong" }, { slug: "gach-moi" }];
 import { isValidName, parseCategory, parsePriceInput } from "@/lib/product-form";
 
 // Rules the shop owner cares about when editing the product list.
@@ -24,10 +24,10 @@ describe("product form rules", () => {
     expect(isValidName("A")).toBe(false);
   });
 
-  it("only accepts the six shop categories", () => {
-    for (const category of CATEGORIES) {
-      expect(parseCategory(category.id)).toBe(category.id);
+  it("accepts categories currently managed by the shop", () => {
+    for (const category of categories) {
+      expect(parseCategory(category.slug, categories)).toBe(category.slug);
     }
-    expect(parseCategory("khong-co-that")).toBeNull();
+    expect(parseCategory("khong-co-that", categories)).toBeNull();
   });
 });

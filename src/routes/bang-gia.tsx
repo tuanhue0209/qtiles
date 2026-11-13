@@ -3,8 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { CATEGORIES, formatPrice, SHOP } from "@/lib/catalog";
-import { productsQueryOptions } from "@/lib/products.query";
+import { formatPrice, SHOP } from "@/lib/catalog";
+import { categoriesQueryOptions, productsQueryOptions } from "@/lib/products.query";
 
 export const Route = createFileRoute("/bang-gia")({
   head: () => ({
@@ -26,6 +26,7 @@ export const Route = createFileRoute("/bang-gia")({
 
 function PricePage() {
   const { data: products } = useSuspenseQuery(productsQueryOptions);
+  const { data: categories } = useSuspenseQuery(categoriesQueryOptions);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
@@ -37,13 +38,13 @@ function PricePage() {
       </p>
 
       <div className="mt-10 space-y-10">
-        {CATEGORIES.map((c) => (
+        {categories.map((c) => (
           <section key={c.id} className="overflow-hidden rounded-lg border bg-card shadow-tile">
             <div className="flex items-center justify-between gap-4 border-b bg-muted/60 px-4 py-3 sm:px-6">
               <h2 className="text-lg font-bold">{c.name}</h2>
               <Link
                 to="/san-pham"
-                search={{ loai: c.id }}
+                search={{ loai: c.slug }}
                 className="text-sm font-medium text-primary hover:underline"
               >
                 Xem mẫu →
@@ -60,7 +61,7 @@ function PricePage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.filter((p) => p.category === c.id).map((p) => (
+                  {products.filter((p) => p.category === c.slug).map((p) => (
                     <tr key={p.id} className="border-t">
                       <td className="px-4 py-3 font-medium sm:px-6">{p.name}</td>
                       <td className="px-4 py-3 text-muted-foreground">{p.size}</td>

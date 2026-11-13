@@ -1,4 +1,4 @@
-import { isCategoryId, type CategoryId } from "./catalog";
+import type { Category } from "./catalog";
 
 /**
  * Giá nhập vào có thể viết "285.000", "285000" hoặc "285 000".
@@ -18,6 +18,6 @@ export function isValidName(value: string): boolean {
   return name.length >= 2 && name.length <= 120;
 }
 
-export function parseCategory(value: string): CategoryId | null {
-  return isCategoryId(value) ? value : null;
+export function parseCategory(value: string, categories: Pick<Category, "slug">[]): string | null {
+  return categories.some((category) => category.slug === value) ? value : null;
 }

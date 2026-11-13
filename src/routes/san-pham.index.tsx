@@ -1,7 +1,8 @@
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { Link, createFileRoute, navigate } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { X } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/site/product-card";
 import { Label } from "@/components/ui/label";
 import {
@@ -23,11 +24,11 @@ import { categoriesQueryOptions, productsQueryOptions } from "@/lib/products.que
 import { cn } from "@/lib/utils";
 
 type FilterSearch = {
-  loai?: string;
-  kich?: string;
-  mau?: string;
-  mat?: string;
-  xu?: string;
+  loai?: string | undefined;
+  kich?: string | undefined;
+  mau?: string | undefined;
+  mat?: string | undefined;
+  xu?: string | undefined;
 };
 
 const EMPTY: FilterSearch = { loai: undefined, kich: undefined, mau: undefined, mat: undefined, xu: undefined };
@@ -65,10 +66,6 @@ export const Route = createFileRoute("/san-pham/")({
   component: ProductsPage,
 });
 
-function applyFilter(next: FilterSearch) {
-  void navigate({ to: "/san-pham", search: { ...EMPTY, ...next } });
-}
-
 function FacetSelect({
   label,
   value,
@@ -76,7 +73,7 @@ function FacetSelect({
   onChange,
 }: {
   label: string;
-  value?: string;
+  value?: string | undefined;
   options: string[];
   onChange: (value: string | undefined) => void;
 }) {
@@ -102,6 +99,8 @@ function FacetSelect({
 
 function ProductsPage() {
   const filter = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const applyFilter = (next: FilterSearch) => { void navigate({ search: { ...EMPTY, ...next } }); };
   const { data: allProducts } = useSuspenseQuery(productsQueryOptions);
   const { data: categories } = useQuery(categoriesQueryOptions);
 
@@ -157,13 +156,13 @@ function ProductsPage() {
       </div>
 
       {active && (
-        <button
+        <Button variant="link"
           type="button"
           onClick={() => applyFilter(EMPTY)}
           className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
         >
           <X className="size-3.5" /> Xóa tất cả bộ lọc
-        </button>
+        </Button>
       )}
 
       {shown.length === 0 ? (
