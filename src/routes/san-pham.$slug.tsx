@@ -32,7 +32,7 @@ export const Route = createFileRoute("/san-pham/$slug")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ];
-    if (photo) {
+    if (photo?.startsWith("https://")) {
       meta.push({ property: "og:image", content: photo });
       meta.push({ name: "twitter:image", content: photo });
     }
@@ -98,7 +98,7 @@ function ProductDetailPage() {
           {photos.length > 1 && (
             <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
               {photos.map((photo, index) => (
-                <button
+                <Button variant="ghost"
                   key={photo}
                   type="button"
                   onClick={() => setActive(index)}
@@ -111,7 +111,7 @@ function ProductDetailPage() {
                   }
                 >
                   <img src={photo} alt="" loading="lazy" width={160} height={160} className="size-full object-cover" />
-                </button>
+                </Button>
               ))}
             </div>
           )}

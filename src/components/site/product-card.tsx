@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react";
 
 import { formatPrice, productPhoto, SHOP, type Category, type Product } from "@/lib/catalog";
 
-export function ProductCard({ product, category }: { product: Product; category?: Category }) {
+export function ProductCard({ product, category }: { product: Product; category?: Category | undefined }) {
   const photo = productPhoto(product, category);
 
   return (
@@ -44,8 +44,8 @@ export function ProductCard({ product, category }: { product: Product; category?
           {product.size} · {product.finish}
         </p>
 
-        <div className="mt-auto flex items-end justify-between gap-2 pt-4">
-          <p className="font-display text-2xl font-medium text-primary">
+        <div className="mt-auto flex flex-wrap items-end justify-between gap-2 pt-4">
+          <p className="font-display text-xl font-medium text-primary sm:text-2xl">
             {formatPrice(product.price)}
             <span className="ml-1 font-sans text-xs font-normal text-muted-foreground">/m²</span>
           </p>

@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { Clock, MapPin, Phone } from "lucide-react";
 
-import { CATEGORIES, SHOP } from "@/lib/catalog";
+import { useQuery } from "@tanstack/react-query";
+import { categoriesQueryOptions } from "@/lib/products.query";
+import { SHOP } from "@/lib/catalog";
 import { LogoMark } from "./logo";
 
 export function SiteFooter() {
+  const { data: categories = [] } = useQuery(categoriesQueryOptions);
   return (
     <footer className="bg-forest text-forest-foreground">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
@@ -23,11 +26,11 @@ export function SiteFooter() {
             Danh mục
           </h3>
           <ul className="mt-4 grid grid-cols-2 gap-2 text-sm">
-            {CATEGORIES.map((c) => (
+            {categories.map((c) => (
               <li key={c.id}>
                 <Link
                   to="/san-pham"
-                  search={{ loai: c.id }}
+                  search={{ loai: c.slug }}
                   className="text-forest-foreground/85 hover:text-forest-foreground"
                 >
                   {c.name}
