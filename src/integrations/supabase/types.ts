@@ -14,47 +14,138 @@ export type Database = {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          id: string
+          image_path: string | null
+          name: string
+          short: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          id?: string
+          image_path?: string | null
+          name: string
+          short?: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          id?: string
+          image_path?: string | null
+          name?: string
+          short?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      inquiries: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string
+          product_id: string | null
+          product_name: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name: string
+          phone: string
+          product_id?: string | null
+          product_name?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string
+          product_id?: string | null
+          product_name?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inquiries_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           category: string
+          color: string
           created_at: string
+          description: string
           finish: string
+          gallery: string[]
           id: string
           image_path: string | null
           name: string
           origin: string
           price: number
           size: string
+          slug: string | null
           sort_order: number
           tag: string | null
         }
         Insert: {
           category: string
+          color?: string
           created_at?: string
+          description?: string
           finish?: string
+          gallery?: string[]
           id?: string
           image_path?: string | null
           name: string
           origin?: string
           price: number
           size: string
+          slug?: string | null
           sort_order?: number
           tag?: string | null
         }
         Update: {
           category?: string
+          color?: string
           created_at?: string
+          description?: string
           finish?: string
+          gallery?: string[]
           id?: string
           image_path?: string | null
           name?: string
           origin?: string
           price?: number
           size?: string
+          slug?: string | null
           sort_order?: number
           tag?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "products_category_fkey"
+            columns: ["category"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["slug"]
+          },
+        ]
       }
       user_roles: {
         Row: {
