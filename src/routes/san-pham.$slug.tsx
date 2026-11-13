@@ -22,7 +22,7 @@ export const Route = createFileRoute("/san-pham/$slug")({
     const product = loaderData?.product;
     const photo = product?.photos[0];
     const description = product
-      ? metaText(product.description || `${product.name}, ${product.size}, ${product.finish}. Giá tham khảo ${formatPrice(product.price)}/m².`, 158)
+      ? metaText(product.description || `${product.name}, ${product.size}, ${product.finish}. Liên hệ QT tiles để nhận báo giá mới nhất.`, 158)
       : "Mẫu gạch này không còn trên website QT tiles.";
 
     const meta = [

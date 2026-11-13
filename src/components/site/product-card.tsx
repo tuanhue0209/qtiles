@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { MessageCircle } from "lucide-react";
 
-import { formatPrice, productPhoto, type Category, type Product } from "@/lib/catalog";
+import { productPhoto, type Category, type Product } from "@/lib/catalog";
 import { useShop } from "@/hooks/use-shop";
 
 export function ProductCard({ product, category }: { product: Product; category?: Category | undefined }) {
